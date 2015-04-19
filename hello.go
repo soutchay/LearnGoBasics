@@ -149,7 +149,7 @@ func learnFlowControl() {
 stuff:
   learnFunctionFactory()
   learnDefer()
-
+  learnInterfaces()
 
 }
 
@@ -178,6 +178,33 @@ func learnDefer() {
   return
 }
 
+//Interfaces!
+//interface type with method String
+type Stringer interface{
+  String() string
+}
+//struct type with two fields x and y as integers
+type pair struct {
+  x, y int
+}
+//define method on type pair which implements Stringer
+func (p pair) String() string { // p is the receiver
+  return fmt.Sprintf("(x: %d, y: %d)", p.x, p.y)
+}
+
+
+func learnInterfaces() {
+  //initiliaze p to pair struct with x as 3 and y as 4
+  p := pair{3, 4}
+  fmt.Println(p.String()) // turning x and y from pair p to strings
+
+  var i Stringer //declaring i as interface type Stringer
+  i = p //works because pair implements Stringer from above
+  fmt.Println("same as above", i.String())
+
+  fmt.Println(p) //don't need to call String() method since Println does
+  fmt.Println(i)
+}
 
 
 
