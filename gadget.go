@@ -150,6 +150,7 @@ stuff:
   learnFunctionFactory()
   learnDefer()
   learnInterfaces()
+  moreInterfaces()
 
 }
 
@@ -205,6 +206,68 @@ func learnInterfaces() {
   fmt.Println(p) //don't need to call String() method since Println does
   fmt.Println(i)
 }
+
+//More Interface
+type geometry interface {
+  area() float64
+  perim() float64
+}
+
+type square struct {
+  width, height float64
+}
+type circle struct {
+  radius float64
+}
+type triangle struct {
+  base, height float64
+}
+
+//Functions for squares
+func (s square) area() float64 {
+  return s.width * s.height
+}
+func (s square) perim() float64 {
+  return 2*(s.width + s.height)
+}
+
+//Functions for circles
+func (c circle) area() float64 {
+  return c.radius * c.radius * m.Pi
+}
+func (c circle) perim() float64 {
+  return c.radius * 2 * m.Pi
+}
+
+//Functions for right triangles
+func (t triangle) area() float64 {
+  return 0.5 * t.base * t.height
+}
+func (t triangle) perim() float64 {
+  return t.base + t.height + m.Sqrt(t.base*t.base + t.height*t.height)
+}
+
+func measure(g geometry) {
+  fmt.Println(g)
+  fmt.Println("Area:", g.area())
+  fmt.Println("Perimeter:", g.perim())
+}
+
+//putting it all together for squares, circles, triangles
+func moreInterfaces() {
+  s := square{width: 3, height: 4} //make square s with width and height
+  c := circle{radius: 5} //make circle c with radius
+  t := triangle{base: 5, height: 10}
+
+  measure(s)
+  measure(c)
+  measure(t)
+}
+
+
+
+
+
 
 
 
