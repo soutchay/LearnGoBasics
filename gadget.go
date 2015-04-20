@@ -5,7 +5,7 @@ import (
   //"io/ioutil" // Implements some I/O utility functions.
   m "math"    // Math library with local alias m
   //"net/http"  // web server
-  //"strconv"   // string conversions
+  "strconv"   // string conversions
 )
 
 func main() {
@@ -208,7 +208,7 @@ func learnInterfaces() {
 }
 
 //More Interface
-type geometry interface {
+type Geometry interface {
   area() float64
   perim() float64
 }
@@ -247,7 +247,7 @@ func (t triangle) perim() float64 {
   return t.base + t.height + m.Sqrt(t.base*t.base + t.height*t.height)
 }
 
-func measure(g geometry) {
+func measure(g Geometry) {
   fmt.Println(g)
   fmt.Println("Area:", g.area())
   fmt.Println("Perimeter:", g.perim())
@@ -262,10 +262,53 @@ func moreInterfaces() {
   measure(s)
   measure(c)
   measure(t)
+
+  //variadic function can take any number of arguments
+  learnVariadicParams("yolo", "strings", "here", 1, 9.4324234)
+}
+//Variadic means to be accepting any number of arguments/params
+func learnVariadicParams(myStrings ...interface{}){
+  //iterate over each value
+  // _ to ignore index of array (it is index, element)
+  for _, param := range myStrings {
+    fmt.Println("param:", param)
+  }
+
+  fmt.Println("params:", fmt.Sprintln(myStrings...))
+
+  learnErrorHandling()
 }
 
+func learnErrorHandling() {
+  //", ok" used to tell if something works or not
+  m := map[int]string{3: "three", 4: "four"}
+  if x, ok := m[1]; !ok { //check if m[1] exists in map
+    fmt.Println("no one in map")
+  } else {
+    fmt.Println(x)
+  }
+  //", err" will give more detail than ok
+  //Atoi is short for parseint
+  //will work because 1111 is string that can be parsed to be an integer
+  if _, err := strconv.Atoi("1111"); err != nil {
+    fmt.Println(err)
+  }
+  //the string 'non-int' will not parse and will give an error
+  if _, err := strconv.Atoi("non-int"); err != nil {
+    fmt.Println(err)
+  }
 
+  learnConcurrrency()
+}
 
+////Concurrency related below
+//c is a channel, a concurrency safe communication object
+func inc(i int, c chan int){
+  c <- i + 1  // <- is the "send" operator when a channel appears on the left
+}
+func learnConcurrrency() {
+
+}
 
 
 
