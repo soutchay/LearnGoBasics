@@ -325,11 +325,11 @@ func learnConcurrrency() {
 
   select {
     case i := <-c: //value received will be assigned to variable i
-      fmt.Printf("it's a %T", i)
+      fmt.Printf("it's an %T", i)
     case <-cs: // or the value received can be discarded.
-        fmt.Println("it's a string")
+      fmt.Println("it's a string")
     case <-ccs: // Empty channel, not ready for communication.
-        fmt.Println("didn't happen.")
+      fmt.Println("didn't happen.")
   }
 
 }
