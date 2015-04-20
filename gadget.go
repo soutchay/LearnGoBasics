@@ -303,10 +303,34 @@ func learnErrorHandling() {
 
 ////Concurrency related below
 //c is a channel, a concurrency safe communication object
+//use inc to increment numbers concurrently
 func inc(i int, c chan int){
   c <- i + 1  // <- is the "send" operator when a channel appears on the left
 }
+
 func learnConcurrrency() {
+  c := make(chan int) //make a channel that handles integers; same as make for slices, maps
+  //goroutines
+  //numbers will be incremented concurrently and sending to the same channel
+  go inc(0, c)
+  go inc(10, c)
+  go inc(-805, c)
+  //read results and print them out, since concurrent no order to when results will arrive
+  fmt.Println(<-c, <-c, <-c)
+
+  cs := make(chan string) //channel to handle strings
+  ccs := make(chan chan string) //channel of str channels
+  go func() {c <- 84}() //new goroutine to send a value
+  go func() {cs <- "wordy"}() //goroutine for cs
+
+  select {
+    case i := <-c: //value received will be assigned to variable i
+      fmt.Printf("it's a %T", i)
+    case <-cs: // or the value received can be discarded.
+        fmt.Println("it's a string")
+    case <-ccs: // Empty channel, not ready for communication.
+        fmt.Println("didn't happen.")
+  }
 
 }
 
