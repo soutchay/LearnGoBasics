@@ -4,12 +4,15 @@ package main
 
 import (
   "fmt"
+  "time"
 )
 
 func main() {
   fmt.Printf("Euler #2\n")
+  start := time.Now()
   fibonacci(100)
   evenSum(fibonacci(50))
+  fmt.Println("Time to evaluate:", time.Since(start))
 }
 
 func fibonacci(n int) (fib map[int]int){

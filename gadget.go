@@ -311,7 +311,9 @@ func inc(i int, c chan int){
 func learnConcurrrency() {
   c := make(chan int) //make a channel that handles integers; same as make for slices, maps
   //goroutines
+  //goroutines are independently executing functions launched by a go statement
   //numbers will be incremented concurrently and sending to the same channel
+  //goroutines are not threads but multiplexed dynamically onto threads
   go inc(0, c)
   go inc(10, c)
   go inc(-805, c)
