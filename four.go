@@ -6,12 +6,16 @@ package main
 import (
   "fmt"
   "strconv"
+  "time"
 )
 
 func main() {
   fmt.Println("Euler 4")
-  fmt.Println(isPalindromeInt(123)) //if input is an integer
-  fmt.Println(isPalindrome("2112")) //if input were to be a string//if input is an integer
+  fmt.Println(isPalindromeInt(906609)) //if input is an integer
+  fmt.Println(isPalindrome("2112")) //if input were to be a string
+  start := time.Now()
+  fmt.Println("Largest palindrome is:", largestPalindrome(1000))
+  fmt.Println("Time taken:", time.Since(start))
 }
 
 //If input is a string type number
@@ -40,4 +44,18 @@ func reverseInt(a int) int{
 
 func isPalindromeInt(a int) bool{
   return a==reverseInt(a)
+}
+
+//find largest product 
+func largestPalindrome(numDigits int) int{
+  number := 0
+  rangeNum := (numDigits-1)/10 //only need to scan for values from this to numDigits
+  for i:=numDigits-1; i>=rangeNum; i-- {
+    for j:=i; j>=rangeNum; j-- {
+      if isPalindromeInt(j*i) && j*i>number{
+        number = j*i
+      }
+    }
+  }
+  return number
 }
