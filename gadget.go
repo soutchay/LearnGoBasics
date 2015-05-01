@@ -6,6 +6,7 @@ import (
   m "math"    // Math library with local alias m
   //"net/http"  // web server
   "strconv"   // string conversions
+  "time"
 )
 
 func main() {
@@ -333,11 +334,35 @@ func learnConcurrrency() {
     case <-ccs: // Empty channel, not ready for communication.
       fmt.Println("didn't happen.")
   }
+  fmt.Println("More concurrency and goroutines \n")
+  moreConcurrency()
 
 }
 
+//Ball struct will keep track of how many times the ball was hit
+type Ball struct{
+  hits int
+}
 
+func moreConcurrency() {
+  table := make(chan *Ball)
+  go player("ping", table)
+  go player("pong", table)
 
+  table <- new(Ball) //turn game on
+  time.Sleep(1*time.Second)
+  <- table //game is over
+}
+
+func player(name string, table chan *Ball) {
+  for {
+    ball := <-table
+    ball.hits++
+    fmt.Println(name, "Ball has been hit", ball.hits, "times")
+    time.Sleep(100 * time.Millisecond)
+    table <-ball
+  }
+}
 
 
 
