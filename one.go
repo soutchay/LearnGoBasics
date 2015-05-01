@@ -3,12 +3,15 @@ package main
 
 import (
   "fmt"
+  "time"
 )
 
 func main() {
+  start := time.Now()
   fmt.Printf("Euler # 1\n")
   sum := sumArray(threeOrFive(1000))
   fmt.Println("Sum is: ", sum)
+  fmt.Println("It took:", time.Since(start))
 }
 
 func threeOrFive(a int) (numb []int){
