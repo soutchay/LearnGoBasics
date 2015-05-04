@@ -356,11 +356,11 @@ func moreConcurrency() {
 
 func player(name string, table chan *Ball) {
   for {
-    ball := <-table
+    ball := <-table //receives ball
     ball.hits++
     fmt.Println(name, "Ball has been hit", ball.hits, "times")
     time.Sleep(100 * time.Millisecond)
-    table <-ball
+    table <-ball //sends ball back
   }
 }
 
