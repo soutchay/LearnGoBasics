@@ -6,7 +6,7 @@ What is the smallest positive number that is evenly divisible by
 all of the numbers from 1 to 20?
 */
 
-/*Notes: 
+/*Some thoughts: 
 1) every number is divisible by 1
 2) number must be even to be divisible by 2
 3) adding all individual digits must be divisible by 3
@@ -35,7 +35,7 @@ all of the numbers from 1 to 20?
   //7 is a prime factor
   2,3,4,5,6,7 : 2*2*3*5*7 = 420
   // 8 is 2*2*2 thus we only need to multiply by another 2
-  2,3,4,5,6,7,8 : 2*2*3*5*7*2
+  2,3,4,5,6,7,8 : 2*2*3*5*7*2 = 840
 
 
 */
@@ -43,8 +43,33 @@ package main
 
 import (
   "fmt"
+  "time"
 )
 
 func main() {
   fmt.Println("Euler 5")
+  start := time.Now()
+  fmt.Println("Smallest number is:", bruteForce())
+  fmt.Println("It took brute force:", time.Since(start))
 }
+
+func bruteForce() int{
+  target := 0
+  for i:= 3; 
+    i %  2 != 0 || i % 3  != 0 || i %  4 != 0 || i % 5  != 0 ||
+    i %  6 != 0 || i %  7 != 0 || i %  8 != 0 || i %  9 != 0 ||
+    i % 10 != 0 || i % 11 != 0 || i % 12 != 0 || i % 13 != 0 ||
+    i % 14 != 0 || i % 15 != 0 || i % 16 != 0 || i % 17 != 0 ||
+    i % 18 != 0 || i % 19 != 0 || i % 20 != 0; i++ {
+    target = i+1 //add 1 because loop stops before i++
+  }
+  return target
+}
+
+
+
+
+
+
+
+
