@@ -62,5 +62,5 @@ func power(a int, b int) int{
 func difference(a int) int{
   sum := a*(a+1)/2 //sum of natural numbers
   square := (a*(a+1)*(2*a+1))/6 //sum of squares of natural numbers
-  return sum*sum-square
+  return power(sum, 2)-square
 }
