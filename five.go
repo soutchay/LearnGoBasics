@@ -36,14 +36,30 @@ all of the numbers from 1 to 20?
   2,3,4,5,6,7 : 2*2*3*5*7 = 420
   // 8 is 2*2*2 thus we only need to multiply by another 2
   2,3,4,5,6,7,8 : 2*2*3*5*7*2 = 840
+  ...
+  2-20 : 2^4*3^2*5*7*11*13*17*19 = 232792560
 
-
+  -Need to keep count how many of each prime factor is necessary from 1 to 20
+  -iterate from 2 to 20, divide by every known prime less than that number
+    most number of 2s needed for values 1 to 10? 2^3=8, 2^4=12 thus 3
+    most number of 2s needed for values 1 to 20? 2^4=16, 2^5=32 thus 4
+    most number of 3s needed for values 1 to 20? 3^2= 9, 3^3= 27 thus 2
+  -thus we need a double for loop that iterates 2-20
+  arrayNum := map[int]int{1:1}
+  for i:=2; i<=number; i++ {
+    for j:=1; j<=number; j++ {
+      if i^j > number {
+        arrayNum[i] = j-1 // arrayNum = map[int]int{1:1, 2:3, 3:4}
+      }
+    }
+  }
 */
 package main
 
 import (
   "fmt"
   "time"
+  "math"
 )
 
 func main() {
@@ -51,6 +67,9 @@ func main() {
   start := time.Now()
   fmt.Println("Smallest number is:", bruteForce())
   fmt.Println("It took brute force:", time.Since(start))
+  valuesNeeded(20)
+  fmt.Println(math.Pow(20, 1))
+  fmt.Println("power", power(3, 2))
 }
 
 func bruteForce() int{
@@ -66,8 +85,38 @@ func bruteForce() int{
   return target
 }
 
+func valuesNeeded(number int) {
+  arrayNum := map[int]int{1:1}
+  for i:=2 ; i<=number; i = i+1 {
+    for j:=1; j<=20; j = j+1 {
+      if power(i,j) > number && isPrime(i){
+        arrayNum[i] = j-1 // arrayNum = map[int]int{1:1, 2:3, 3:4}
+        fmt.Println("i", i, "array", arrayNum[i])
+        break
+      }
+    }
+  }
+  fmt.Println(arrayNum)
+}
 
+func power(a int, b int) int{
+  //a is the base, b is the exponent
+  value := 1
+  for i:=0; i<b; i++ {
+    value *= a
+  }
+  return value
+}
 
+func isPrime(n int) bool{
+  var i int = 2 //start at 2 since prime number is a factor of itself and 1
+  for ; i<n; i++ {
+    if n%i == 0 { //check if n is divisible by any number other than itself
+      return false //not a prime number if it is divisible by a number other than itself and 1
+    }
+  }
+  return true
+}
 
 
 
