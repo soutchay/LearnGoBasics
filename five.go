@@ -89,6 +89,7 @@ func lowestNumberNeeded(number int) int{
   arrayNum := map[int]int{1:1}
   for i:=2 ; i<=number; i = i+1 {
     for j:=1; j<=20; j = j+1 {
+      //check that the power is not greater than number, also needs to be a prime
       if power(i,j) > number && isPrime(i){
         arrayNum[i] = j-1 // arrayNum = map[int]int{1:1, 2:3, 3:4}
         break
