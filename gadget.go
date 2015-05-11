@@ -2,9 +2,9 @@ package main
 
 import (
   "fmt"
-  //"io/ioutil" // Implements some I/O utility functions.
+  "io/ioutil" // Implements some I/O utility functions for web programming
   m "math"    // Math library with local alias m
-  //"net/http"  // web server
+  "net/http"  // web server
   "strconv"   // string conversions
   "time"
 )
@@ -352,6 +352,8 @@ func moreConcurrency() {
   table <- new(Ball) //turn game on
   time.Sleep(1*time.Second)
   <- table //game is over
+
+  learnWebProgramming()
 }
 
 func player(name string, table chan *Ball) {
@@ -364,13 +366,29 @@ func player(name string, table chan *Ball) {
   }
 }
 
+func learnWebProgramming() {
+  go func() { //goroutine to listen for errors
+    //first param is TCP address to listen to
+    //second param is an interface, or http.Handler
+    err := http.ListenAndServe(":8080", pair{})
+    fmt.Println(err) // if any errors
+  }()
+  requestServer()
+}
 
-
-
-
-
-
-
+//make pair an http.Handler by implementing ServeHTTP
+func (p pair) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+    // Serve data with a method of http.ResponseWriter
+    w.Write([]byte("Go Go Gadget Go"))
+}
+//set up the web server
+func requestServer() {
+    resp, err := http.Get("http://localhost:8080")
+    fmt.Println(err)
+    defer resp.Body.Close()
+    body, err := ioutil.ReadAll(resp.Body)
+    fmt.Printf("\nWebserver said: `%s`", string(body))
+}
 
 
 
