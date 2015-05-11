@@ -24,6 +24,9 @@ func main() {
   start := time.Now()
   fmt.Println(differenceBrute(sumSquares(100), squareSum(100)))
   fmt.Println("It took brute:", time.Since(start))
+  start = time.Now()
+  fmt.Println(difference(100))
+  fmt.Println("It took math:", time.Since(start))
 }
 
 func sumSquares(a int) int{
@@ -54,4 +57,10 @@ func power(a int, b int) int{
     value *= a
   }
   return value
+}
+
+func difference(a int) int{
+  sum := a*(a+1)/2 //sum of natural numbers
+  square := (a*(a+1)*(2*a+1))/6 //sum of squares of natural numbers
+  return sum*sum-square
 }
