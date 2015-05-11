@@ -59,7 +59,6 @@ package main
 import (
   "fmt"
   "time"
-  "math"
 )
 
 func main() {
@@ -67,9 +66,9 @@ func main() {
   start := time.Now()
   fmt.Println("Smallest number is:", bruteForce())
   fmt.Println("It took brute force:", time.Since(start))
-  valuesNeeded(20)
-  fmt.Println(math.Pow(20, 1))
-  fmt.Println("power", power(3, 2))
+  start = time.Now()
+  fmt.Println("Smallest number is:", lowestNumberNeeded(20))
+  fmt.Println("It took prime factor:", time.Since(start))
 }
 
 func bruteForce() int{
@@ -85,18 +84,22 @@ func bruteForce() int{
   return target
 }
 
-func valuesNeeded(number int) {
+//valuesNeeded will show all the prime factors needed to make
+func lowestNumberNeeded(number int) int{
   arrayNum := map[int]int{1:1}
   for i:=2 ; i<=number; i = i+1 {
     for j:=1; j<=20; j = j+1 {
       if power(i,j) > number && isPrime(i){
         arrayNum[i] = j-1 // arrayNum = map[int]int{1:1, 2:3, 3:4}
-        fmt.Println("i", i, "array", arrayNum[i])
         break
       }
     }
   }
-  fmt.Println(arrayNum)
+  total := 1
+  for l, k := range arrayNum {
+    total *= power(l, k)
+  }
+  return total //return lowest number
 }
 
 func power(a int, b int) int{
