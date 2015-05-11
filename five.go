@@ -84,8 +84,8 @@ func bruteForce() int{
   return target
 }
 
-//valuesNeeded will show all the prime factors needed to make
 func lowestNumberNeeded(number int) int{
+  //arrayNum will keep track of what values and what exponent we will need for prime factors
   arrayNum := map[int]int{1:1}
   for i:=2 ; i<=number; i = i+1 {
     for j:=1; j<=20; j = j+1 {
@@ -95,9 +95,10 @@ func lowestNumberNeeded(number int) int{
       }
     }
   }
+  //iterate over the map and multiply to get the lowest number that can be evenly divided by all numbers
   total := 1
-  for l, k := range arrayNum {
-    total *= power(l, k)
+  for key, value := range arrayNum {
+    total *= power(key, value)
   }
   return total //return lowest number
 }
